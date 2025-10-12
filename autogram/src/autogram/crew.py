@@ -1,6 +1,8 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
+from crewai_tools import SerperDevTool
+# from crewai_tools import ScrapeWebsiteTool  # Commented out for now
 from typing import List
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -23,13 +25,15 @@ class Autogram():
     def researcher(self) -> Agent:
         return Agent(
             config=self.agents_config['researcher'], # type: ignore[index]
+            tools=[SerperDevTool()],  # Use SerperDevTool for web search
+            # tools=[ScrapeWebsiteTool(website_url="https://www.hubermanlab.com/episode/dr-casey-means-transform-your-health-by-improving-metabolism-hormone-blood-sugar-regulation")],  # Commented out - was causing token limit issues
             verbose=True
         )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def content_creator(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
+            config=self.agents_config['content_creator'], # type: ignore[index]
             verbose=True
         )
 

@@ -1,17 +1,30 @@
 research_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Search the web for cool and cutting-edge neuroscience topics, and then decide a single topic to focus on keeping in mind what a somewhat educated audience in instagram would find interesting
+    
+    Focus on finding the most impactful, practical, and scientifically-backed information from reputable sources.
+    Create a concise but detailed research summary based on your web search findings.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
+    A focused research summary containing:
+    Keep the report concise but scientifically accurate and cite sources when possible.
   agent: researcher
 
 reporting_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Review the neuroscience research summary from the researcher and create a detailed video generation prompt for an AI video generator.
+    The video should feature a wizard goat character explaining the key neuroscience concepts in an engaging, educational way.
+    Transform the research findings into a compelling narrative that the wizard goat will present.
+    Focus on making complex neuroscience concepts accessible and entertaining while maintaining scientific accuracy.
+    Create specific visual descriptions, dialogue, and scene directions for the AI video generator.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A comprehensive AI video generation prompt containing:
+    1. Character description: Detailed description of the wizard goat (appearance, personality, mannerisms)
+    2. Scene setting: Visual environment and background descriptions
+    3. Script/Dialogue: What the wizard goat says to explain the neuroscience concepts
+    4. Visual cues: Specific visual elements, animations, or graphics to accompany explanations
+    5. Pacing and transitions: How the video flows between different concepts
+    6. Educational hooks: Engaging ways to present metabolic health, hormone regulation, and brain optimization
+    7. Call-to-action: How the wizard goat concludes and encourages viewers
+    Format as a detailed video generation prompt ready for AI video creation tools.
+  agent: content_creator
+  context: [research_task]

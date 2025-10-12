@@ -18,10 +18,9 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 def run():
     """
-    Run the crew.
+    Run the crew for neuroscience content extraction.
     """
     inputs = {
-        'topic': 'AI LLMs',
         'current_year': str(datetime.now().year)
     }
     
