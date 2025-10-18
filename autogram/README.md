@@ -52,3 +52,31 @@ For support, questions, or feedback regarding the Autogram Crew or crewAI.
 - [Chat with our docs](https://chatg.pt/DWjSBZn)
 
 Let's create wonders together with the power and simplicity of crewAI.
+
+## Quick local setup (recommended)
+
+1. Create and activate a virtual environment (from project root):
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+2. Create a `.env` file from the example and add your OpenAI key:
+
+```bash
+cp ../.env.example .env
+# then edit .env and add your OPENAI_API_KEY
+```
+
+3. Run the app locally (example):
+
+```bash
+python -m autogram.main
+```
+
+Notes:
+- Never commit your real `.env` file. The repository includes `.env.example` as a template.
+- If you use another shell or virtualenv tool (direnv, pyenv, virtualenvwrapper), adjust commands accordingly.

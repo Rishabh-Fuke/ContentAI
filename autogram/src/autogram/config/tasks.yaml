@@ -1,13 +1,36 @@
 research_task:
   description: >
-    Search the web for cool and cutting-edge neuroscience topics, and then decide a single topic to focus on keeping in mind what a somewhat educated audience in instagram would find interesting
+    Search the web for interesting and cutting-edge neuroscience topics, and then decide stick with a single topic. 
     
-    Focus on finding the most impactful, practical, and scientifically-backed information from reputable sources.
+    Focus on finding the most scientifically-backed information from reputable sources.
     Create a concise but detailed research summary based on your web search findings.
+
   expected_output: >
     A focused research summary containing:
-    Keep the report concise but scientifically accurate and cite sources when possible.
+    A concise report but scientifically accurate and cite sources when possible.
+    Facts are the most important aspect of your research
   agent: researcher
+
+
+summarize_task:
+  description: >
+
+    The summary should extract the key features from the researcher that can be passed on to the content generation agent. Focus on the key information
+    and summarize what you can in order to create a concise report. 
+
+
+  expected_output: >
+
+   A concise summary containing:
+   1. Factual information
+   2. Hard data when applicable
+   3. Interesting results or discoveries 
+
+
+  agent: summarizer
+  # Wiring note: `agent: summarizer` ensures this task is handled by the `summarizer` agent
+  # The crew's Process.sequential behavior causes this task to run after `research_task`.
+  context: [research_task]
 
 reporting_task:
   description: >
