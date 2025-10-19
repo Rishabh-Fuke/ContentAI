@@ -1,14 +1,17 @@
 research_task:
   description: >
-    Search the web for interesting and cutting-edge neuroscience topics, and then decide stick with a single topic. 
-    
-    Focus on finding the most scientifically-backed information from reputable sources.
-    Create a concise but detailed research summary based on your web search findings.
+    Search for the latest and most relevant neuroscience discoveries in areas such as
+    sleep, memory, emotions, or cognitive enhancement. Use primary research sources
+    (PubMed, Nature Neuroscience, Neuron) and integrate insights from expert commentary
+    (Huberman Lab, Lex Fridman, educational lectures) to explain findings in a clear,
+    educational way.
 
   expected_output: >
-    A focused research summary containing:
-    A concise report but scientifically accurate and cite sources when possible.
-    Facts are the most important aspect of your research
+    A structured and educational research summary that includes:
+      - A concise description of a specific discovery or topic.
+      - Explanation of mechanisms behind the finding.
+      - Real-world implications for health, learning, or performance.
+      - Clearly labeled sources and short citations.
   agent: researcher
 
 
