@@ -2,10 +2,8 @@
 import sys
 import warnings
 from datetime import datetime
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
+from autogram import get_openai_key
+import sys
 
 from autogram.crew import Autogram
 
@@ -24,6 +22,13 @@ def run():
         'current_year': str(datetime.now().year)
     }
     
+    api_key = get_openai_key()
+    if not api_key:
+        print("Warning: OPENAI_API_KEY not found in environment.\n"
+              "Create a .env file (see .env.example) and add your key as OPENAI_API_KEY=YOUR_KEY\n"
+              "The crew will likely fail without a valid key.")
+        # Continue anyway so users can run non-API parts or see more errors
+
     try:
         Autogram().crew().kickoff(inputs=inputs)
     except Exception as e:
