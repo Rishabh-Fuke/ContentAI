@@ -15,12 +15,23 @@ from typing import List
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
+# Tool registration map for CrewAI
+tool_functions = {
+    "veo_tool": VeoTool,
+    "collector_tool": CollectorTool,
+    "summarizer_tool": SummarizerTool,
+    "formatter_tool": FormatterTool,
+    # add others if needed
+}
+
+
 @CrewBase
 class Autogram():
     """Autogram crew"""
 
     agents: List[BaseAgent]
     tasks: List[Task]
+
 
  
     @agent
@@ -109,5 +120,6 @@ class Autogram():
             tasks=self.tasks, 
             process=Process.sequential,
             verbose=True,
+            tools=tool_functions,
        
         )

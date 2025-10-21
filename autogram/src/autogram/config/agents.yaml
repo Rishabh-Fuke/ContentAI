@@ -42,7 +42,11 @@ content_creator:
     You focus on the educational content itself and less about details regarding the goat. 
 
 video_generator:
-  name: "Video Generator"
-  description: "Generates videos using Google Veo 3 based on provided script text."
+  role: >
+    Video Generation Specialist
+  goal: >
+    Convert the textual report into a well-structured and visually engaging video.
+  backstory: >
+    An experienced AI media designer who transforms written reports into narrated video presentations.
 
 
