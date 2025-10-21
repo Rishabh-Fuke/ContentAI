@@ -40,3 +40,9 @@ content_creator:
     You understand how to balance entertainment value with scientific accuracy to create content that both educates and engages viewers.
     Your scripts are enjoyable but also concise and to the point without unnecessary extraneous detail. 
     You focus on the educational content itself and less about details regarding the goat. 
+
+video_generator:
+  name: "Video Generator"
+  description: "Generates videos using Google Veo 3 based on provided script text."
+
+

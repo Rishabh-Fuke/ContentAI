@@ -6,6 +6,9 @@ from crewai_tools import SerperDevTool #type:ignore
 from autogram.tools.collector_tool import CollectorTool
 from autogram.tools.summarizer_tool import SummarizerTool
 from autogram.tools.formatter_tool import FormatterTool
+from autogram.tools.veo_tool import VeoTool
+import os
+
 # from crewai_tools import ScrapeWebsiteTool  # Commented out for now
 from typing import List
 # If you want to run a snippet of code before or after the crew starts,
@@ -46,6 +49,22 @@ class Autogram():
             tools=[FormatterTool()],
             verbose=True
         )
+    
+    @agent
+    def video_generator(self) -> Agent:
+        """Generates a video using Google Veo 3 from the script produced by the content_creator."""
+        veo_api_key = os.getenv("GOOGLE_VEO_API_KEY", "")
+        if not veo_api_key:
+            raise ValueError("GOOGLE_VEO_API_KEY not found in environment variables.")
+        
+        return Agent(
+            config=self.agents_config['video_generator'],
+            tools=[VeoTool(api_key=veo_api_key)],
+            verbose=True,
+            instructions="Use the VeoTool to generate a video using the script text from the 'report.md' file.",
+            
+        )
+
 
   
 
@@ -68,6 +87,17 @@ class Autogram():
             config=self.tasks_config['reporting_task'], 
             output_file='report.md' #Saves the final script to report.md for ease of viewing. Could pass the file to another agent for video generation
         )
+    
+    @task
+    def video_generation_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['video_generation_task'],
+            inputs={
+            "script_file": "report.md" 
+            },
+            output_file='autogram_output.mp4'
+        )
+
 
     @crew
     def crew(self) -> Crew:

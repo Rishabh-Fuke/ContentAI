@@ -54,3 +54,12 @@ reporting_task:
     Format as a detailed video generation prompt ready for AI video creation tools.
   agent: content_creator
   context: [research_task]
+
+
+video_generation_task:
+  description: "Generate a video from the report.md script using Google Veo 3."
+  expected_output: "An MP4 video file created by Veo."
+  agent: "video_generator"
+  inputs:
+    script_file: "report.md"
+
