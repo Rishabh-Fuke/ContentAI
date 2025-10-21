@@ -16,6 +16,7 @@ sys.path.insert(0, str(root / 'autogram' / 'src'))
 from autogram.tools.collector_tool import CollectorTool
 from autogram.tools.summarizer_tool import SummarizerTool
 from autogram.tools.formatter_tool import FormatterTool
+from autogram.tools.veo_tool import VeoTool
 
 
 def main() -> None:
@@ -76,6 +77,7 @@ def main() -> None:
         f"SERPER_KEY present: {bool(os.environ.get('SERPER_KEY'))}",
         f"SERPER_API_KEY present: {bool(os.environ.get('SERPER_API_KEY'))}",
         f"OPENAI_API_KEY present: {bool(os.environ.get('OPENAI_API_KEY'))}",
+        f"VEO_KEY present: {bool(os.environ.get('VEO_KEY') or os.environ.get('VEO_API_KEY'))}",
     ]
 
     out_path = root / 'report.md'
@@ -92,6 +94,44 @@ def main() -> None:
         f.write('## Tool trace\n\n')
         for line in trace_lines:
             f.write(f'- {line}\n')
+
+    # Optionally run video generation if RUN_VEO=true in the env
+    # By default, run video generation. Set RUN_VEO=false in the env to disable.
+    run_veo = os.environ.get('RUN_VEO', 'true').lower() in ('1', 'true', 'yes')
+    veo_out = None
+    if run_veo:
+        print('[demo] RUN_VEO=true — instantiating VeoTool and generating video')
+        veo_key = os.environ.get('VEO_KEY') or os.environ.get('VEO_API_KEY')
+        if not veo_key:
+            print('[demo] VEO key not found in environment; skipping video generation')
+        else:
+            try:
+                veo = VeoTool(api_key=veo_key)
+                # Use the generated report.md as the prompt for the video tool.
+                # Read the report and trim to a reasonable length if necessary.
+                try:
+                    report_text = (root / 'report.md').read_text(encoding='utf-8')
+                except Exception:
+                    report_text = script
+
+                # Trim to first 30k characters to avoid excessively large prompts
+                max_prompt_len = 30000
+                video_prompt = report_text[:max_prompt_len]
+
+                print(f"[demo] Using report.md as video prompt (chars={len(video_prompt)})")
+                veo_out = veo._run(prompt=video_prompt, output_file=str(root / 'autogram_output.mp4'))
+                print('[demo] Video generation completed:', veo_out)
+            except Exception as e:
+                print('[demo] Video generation error:', e)
+
+        # append video info to the report
+        with out_path.open('a', encoding='utf-8') as f:
+            f.write('\n---\n\n')
+            f.write('## Video generation\n\n')
+            if veo_out:
+                f.write(f'Video file: {veo_out}\n')
+            else:
+                f.write('Video generation was not run or failed.\n')
 
     print(f"[demo] Report written to: {out_path}")
 
